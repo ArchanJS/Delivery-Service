@@ -16,7 +16,8 @@ const orderSchema= new mongoose.Schema({
         required:true
     },
     dpID:{
-        type:String
+        type:String,
+        default:"No delivery person assigned"
     },
     pickupLocations:[{
         type:String,
