@@ -42,7 +42,7 @@ router.post('/register', async (req, res) => {
             res.status(400).json({ error: "Please enter all the details!" });
         }
     } catch (error) {
-        res.status(400).json({ error: "Something went wrong!" })
+        res.status(500).json({ error: "Something went wrong!" });
     }
 })
 
@@ -78,7 +78,7 @@ router.post('/verify', async (req, res) => {
             res.status(400).json({ error: "Please enter all the details!" });
         }
     } catch (error) {
-        res.status(400).json({ error: "Something went wrong!" })
+        res.status(500).json({ error: "Something went wrong!" });
     }
 })
 
@@ -114,7 +114,7 @@ router.post('/login', async (req, res) => {
         }
 
     } catch (error) {
-        res.status(401).json({ error: "Invalid credentials!2" });
+        res.status(500).json({ error: "Something went wrong!" });
     }
 })
 

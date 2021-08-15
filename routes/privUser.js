@@ -1,6 +1,6 @@
 const express=require('express');
 const {authUser}=require('../middlewares/auth');
-const Item = require('../models/Item');
+const Order = require('../models/Order');
 
 const router=express.Router();
 
@@ -8,7 +8,7 @@ router.get('/',authUser,async(req,res)=>{
     try {
         res.status(200).send(req.user);
     } catch (error) {
-        res.status(401).json({error:"Something went wrong!"});
+        res.status(500).json({error:"Something went wrong!"});
     }
 })
 
@@ -23,29 +23,39 @@ router.post('/placeorder',authUser,async(req,res)=>{
         }
         console.log(2);
         const characters ="abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            let itemID = "i";
+            let orderID = "o";
             const charactersLength = characters.length;
 
             while (true) {
                 for (var i = 0; i < 5; i++) {
-                    itemID += characters.charAt(Math.floor(Math.random() * charactersLength));
+                    orderID += characters.charAt(Math.floor(Math.random() * charactersLength));
                 }
 
-                let checkItem = await Item.findOne({ itemID });
-                if (checkItem != null) {
-                    itemID = "i";
+                let checkOrder = await Order.findOne({ orderID });
+                if (checkOrder != null) {
+                    orderID = "o";
                     continue;
                 } else {
                     break;
                 }
             }
         // console.log(pickupLocations);
-            const item=new Item({items,itemID,customerID,pickupLocations});
+            const order=new Order({items,orderID,customerID,pickupLocations});
         // console.log(item);
-            await item.save();
-            res.status(201).json({message:"Task created!"});
+            await order.save();
+            res.status(201).json({message:"Order placed!"});
     } catch (error) {
-        res.status(400).json({error:"Something went wrong!"});
+        res.status(500).json({error:"Something went wrong!"});
+    }
+})
+
+router.get('/ownorders',authUser,async(req,res)=>{
+    try {
+        const customerID=req.user.userID;
+        const orders=await Order.find({customerID});
+        res.status(200).send(orders);
+    } catch (error) {
+        res.status(500).json({error:"Something went wromg!"});
     }
 })
 

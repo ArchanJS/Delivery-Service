@@ -21,10 +21,6 @@ const dpSchema=new mongoose.Schema({
         required:true,
         unique:true
     },
-    busy:{
-        type:Boolean,
-        default:false
-    },
     password:{
         type:String,
         required:true

@@ -1,12 +1,12 @@
 const mongoose=require('mongoose');
 
-const itemSchema= new mongoose.Schema({
+const orderSchema= new mongoose.Schema({
     items:[{
         item:String,
         quantity:String,
         category:String
     }],
-    itemID:{
+    orderID:{
         type:String,
         required:true,
         unique:true
@@ -24,10 +24,10 @@ const itemSchema= new mongoose.Schema({
     }],
     status:{
         type:String,
-        default:"Task Created."
+        default:"Task Created"
     }
 })
 
-const Item=new mongoose.model("items",itemSchema);
+const Order=new mongoose.model("orders",orderSchema);
 
-module.exports=Item;
+module.exports=Order;
